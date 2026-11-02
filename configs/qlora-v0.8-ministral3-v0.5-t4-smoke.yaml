@@ -1,0 +1,47 @@
+run:
+  id: ministral3-3b-murl-v0.8-v05-t4-smoke
+  seed: 20261004
+  purpose: "Non-scored T4 feasibility gate: base load, QLoRA attachment, one frozen-recipe optimizer step, and adapter reload."
+
+base_model:
+  id: mistralai/Ministral-3-3B-Instruct-2512
+  revision: b4b0163a32c9867d2424ac10b40fe0db6fa95110
+  model_loader: image_text_to_text
+  load_in_4bit: true
+  quantization: nf4
+  compute_dtype: float16
+  trust_remote_code: false
+
+architecture:
+  model_type: mistral3
+  license_access: "Apache-2.0; public Hugging Face repository."
+  projection_mapping: "Mistral3ForConditionalGeneration text backbone q_proj, k_proj, v_proj, o_proj attention; gate_proj, up_proj, down_proj MLP."
+
+data:
+  train_file: data/training/v0.5-sft-train.jsonl
+  train_file_sha256: ea78f215770cf29880532e19126a9c27a28308bb1403c52152c7c995c1139826
+  train_examples: 293
+  message_field: messages
+  test_policy: "Do not read or use data/processed/test.jsonl during this feasibility gate."
+
+qlora:
+  rank: 8
+  alpha: 16
+  dropout: 0.05
+  target_modules: [q_proj, k_proj, v_proj, o_proj, gate_proj, up_proj, down_proj]
+
+training:
+  max_steps: 1
+  learning_rate: 0.0002
+  per_device_train_batch_size: 1
+  gradient_accumulation_steps: 8
+  max_sequence_length: 2048
+  warmup_steps: 3
+  logging_steps: 1
+  save_steps: 1
+  output_dir: models/ministral3-3b-murl-v0.8-v05-t4-smoke
+  smoke_only: true
+  frozen_recipe_note: "All resource and optimizer settings match v0.5; max_steps is one only because this is the pre-scored feasibility gate."
+
+artifacts:
+  save: [adapter, tokenizer, trainer_state, training_metrics, resolved_config, dataset_metadata]
