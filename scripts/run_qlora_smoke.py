@@ -135,7 +135,18 @@ def main() -> int:
             trust_remote_code=base.get("trust_remote_code", False),
         )
         loaded.config.use_cache = False
-        loaded = prepare_model_for_kbit_training(loaded)
+        # Gemma 4's multimodal wrapper currently exposes its language weights in
+        # fp16 even when loaded with bitsandbytes.  PEFT's generic preparation
+        # attempts to up-cast that entire wrapper to fp32, which cannot fit on a
+        # 16 GB T4.  The opt-in path below retains the normal QLoRA invariant
+        # (all base weights frozen; only LoRA adapters train) without that cast.
+        if base.get("kbit_preparation") == "freeze_only":
+            for parameter in loaded.parameters():
+                parameter.requires_grad = False
+            if hasattr(loaded, "enable_input_require_grads"):
+                loaded.enable_input_require_grads()
+        else:
+            loaded = prepare_model_for_kbit_training(loaded)
         return get_peft_model(loaded, LoraConfig(
             r=qlora["rank"], lora_alpha=qlora["alpha"], lora_dropout=qlora["dropout"],
             target_modules=qlora["target_modules"], bias="none", task_type="CAUSAL_LM",
@@ -216,7 +227,19 @@ def main() -> int:
             batch["second_phase_weights"] = torch.tensor(second_phase_weights, dtype=torch.float)
         return batch
 
-    class WeightedStageTrainer(Trainer):
+    class SFTTrainer(Trainer):
+        """Calculate token loss outside the model to avoid an unnecessary fp32 logits copy."""
+        def compute_loss(self, model, inputs, return_outputs=False, **kwargs):
+            labels = inputs.pop("labels")
+            outputs = model(**inputs)
+            logits = outputs.logits[:, :-1, :].contiguous()
+            targets = labels[:, 1:].contiguous()
+            loss = torch.nn.functional.cross_entropy(
+                logits.view(-1, logits.size(-1)), targets.view(-1), ignore_index=-100,
+            )
+            return (loss, outputs) if return_outputs else loss
+
+    class WeightedStageTrainer(SFTTrainer):
         def compute_loss(self, model, inputs, return_outputs=False, num_items_in_batch=None):
             first_phase_weights = inputs.pop("first_phase_weights")
             second_phase_weights = inputs.pop("second_phase_weights")
@@ -249,7 +272,7 @@ def main() -> int:
         report_to="none", fp16=compute_dtype == torch.float16, bf16=compute_dtype == torch.bfloat16,
         remove_unused_columns=False, seed=run["seed"], data_seed=run["seed"],
     )
-    trainer_class = WeightedStageTrainer if weighted_schedule else Trainer
+    trainer_class = WeightedStageTrainer if weighted_schedule else SFTTrainer
     dataset = ChatDataset(records)
     stage_metrics = {}
     callbacks = [StageBoundaryCallback()] if weighted_schedule and weighted_schedule["reload_at_boundary"] else []

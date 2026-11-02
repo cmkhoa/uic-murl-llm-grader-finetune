@@ -11,6 +11,7 @@ base_model:
   quantization: nf4
   compute_dtype: float16
   trust_remote_code: false
+  kbit_preparation: freeze_only
 
 architecture:
   model_type: gemma4
@@ -30,7 +31,7 @@ qlora:
   rank: 8
   alpha: 16
   dropout: 0.05
-  target_modules: [q_proj, k_proj, v_proj, o_proj, gate_proj, up_proj, down_proj]
+  target_modules: [q_proj.linear, k_proj.linear, v_proj.linear, o_proj.linear, gate_proj.linear, up_proj.linear, down_proj.linear]
 
 training:
   max_steps: 60
