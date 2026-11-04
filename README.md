@@ -6,7 +6,7 @@ The first phase is text-to-text only. OCR and handwritten-image input are deferr
 
 ## Project status
 
-The v0.1-pilot text benchmark and prompt-only evaluation baseline are ready. The corpus is family-disjoint, validates cleanly, and has versioned zero-shot/few-shot prompts. Few-shot was selected on validation and evaluated once on the held-out test split; read the [held-out baseline report](reports/v0.1-heldout-test-baseline.md) before running another experiment.
+The v0.8 cross-family validation experiment is complete. The independently audited selection is **Qwen3-4B v0.6 hierarchical multi-task** (47/48 valid, 35/48 correct, taxonomy macro-F1 0.6984, first-error exact 19/28, utility 0.7020). Read the [final cross-family report](reports/v0.8-final-cross-family-report.md) and use the [reproducibility notebook](notebooks/v0.8-final-reproducibility.ipynb) or [offline helper](scripts/v08_reproducibility.py). The held-out test remains frozen pending separate authorization for one evaluation of this exact winner.
 
 ## Repository layout
 
@@ -21,7 +21,7 @@ The v0.1-pilot text benchmark and prompt-only evaluation baseline are ready. The
 
 ## Next step
 
-The [v0.5 moderated taxonomy-balance recipe](reports/v0.5-moderated-taxonomy-balance-validation.md) remains the eligible Qwen anchor: 97.9% validity, 63.8% correctness accuracy, and 32.0% taxonomy macro F1. The completed [v0.6 hierarchical multi-task experiment](reports/v0.6-hierarchical-multitask-validation.md) improved correctness and first-error localization but missed its validity gate and reduced taxonomy F1. The completed [v0.7 two-stage diagnosis experiment](reports/v0.7-two-stage-diagnosis-validation.md) reached 48/48 validity and higher balanced utility than v0.5, but missed the precommitted taxonomy floor (30.3% versus 32.0%). Next, run the controlled [v0.8 cross-family comparison](reports/v0.8-cross-family-execution-plan.md) with paired v0.5 and v0.7 arms for each family. This tests whether v0.7's late diagnostic phase transfers beyond Qwen without retroactively changing its failed Qwen eligibility decision. The held-out test split remains frozen until a final model is selected.
+Do not tune or rerun validation. If explicitly authorized, follow the exact one-time held-out plan in the [final report](reports/v0.8-final-cross-family-report.md#exact-one-time-held-out-test-plan-not-executed) using only the frozen Qwen3 v0.6 adapter. A held-out result must not trigger another tuning round.
 
 See [the project plan](PLANNING.MD), [the task specification](docs/task-spec.md), and [the annotation guide](docs/annotation-guide.md).
 

@@ -1,0 +1,10 @@
+dimension,slice,examples,valid,correctness,taxonomy_exact,first_error_exact,first_error_support
+topic,improper_integrals,8,8,0.875,0.625,0.6,5
+topic,integration_by_parts,6,6,0.6666666666666666,0.6666666666666666,0.5,4
+topic,mixed_review,9,9,0.8888888888888888,1.0,1.0,5
+topic,partial_fractions,6,6,0.6666666666666666,0.5,0.5,4
+topic,substitution,6,5,0.8,1.0,1.0,2
+topic,trig_integrals,7,7,0.5714285714285714,0.8571428571428571,0.75,4
+topic,trig_substitution,6,6,0.6666666666666666,0.6666666666666666,0.5,4
+difficulty,hard,26,26,0.7692307692307693,0.7307692307692307,0.6666666666666666,15
+difficulty,medium,22,21,0.7142857142857143,0.8095238095238095,0.6923076923076923,13

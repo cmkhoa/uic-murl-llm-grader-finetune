@@ -1,0 +1,18 @@
+{
+  "gates": {
+    "valid": 47,
+    "correct": 30,
+    "taxonomy": 0.3201,
+    "first_error": 0.536
+  },
+  "family_nominees": {
+    "Qwen2.5": "qwen2.5-v0.5",
+    "Qwen3": "qwen3-v0.6",
+    "Phi": null
+  },
+  "winner": "qwen3-v0.6",
+  "held_out_test_executed": false,
+  "validation_archives_recalculated": 11,
+  "training_archives_audited": 6,
+  "zip_archives_hashed": 54
+}
