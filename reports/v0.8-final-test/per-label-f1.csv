@@ -1,0 +1,11 @@
+label,validation_support,validation_f1,test_support,test_f1
+algebra,6,0.7692307692307693,4,0.6666666666666666
+antiderivative,9,0.7142857142857143,5,0.7272727272727273
+bounds,4,0.5714285714285714,5,0.75
+integration_by_parts,1,1.0,1,0.6666666666666666
+none,18,0.8571428571428571,21,0.926829268292683
+other,2,0.5,2,0.8
+partial_fractions,1,1.0,1,1.0
+sign,4,0.5714285714285714,2,1.0
+substitution,1,0.0,4,0.0
+trig_identity,1,1.0,2,0.5

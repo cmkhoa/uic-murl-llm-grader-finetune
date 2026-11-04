@@ -1,0 +1,29 @@
+<!doctype html><html><head><meta charset="utf-8"><title>MURL v0.8 final-test reproduction</title><style>
+body{font:16px system-ui;max-width:1100px;margin:2rem auto}section{border:1px solid #ddd;border-radius:8px;margin:1rem 0;padding:1rem}pre{white-space:pre-wrap;font:14px ui-monospace}.code{background:#f7f9fb}.output{background:white;border-left:4px solid #0072b2;padding:.7rem}.grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}img{width:100%;border:1px solid #ddd}figure{margin:0}@media(max-width:760px){.grid{grid-template-columns:1fr}}</style></head><body><h1>MURL v0.8 final-test reproducibility notebook</h1><section class="markdown"><pre># MURL v0.8 one-time final-test reproducibility
+
+This companion notebook reproduces the final-test tables and figures **from archived outputs only**. It does not load the model, tokenize held-out examples, run generation, or invoke the evaluator. The one-time generation and scoring invariants are asserted from the immutable archive manifest.
+
+Run from the repository root after placing the three ignored run artifacts in `runs/final/` as listed in the final-test report.</pre></section><section class="code"><div>In [1]</div><pre># Archive-only regeneration; this helper contains no model or evaluator call.
+import subprocess, sys
+subprocess.run([sys.executable, &#x27;scripts/v08_final_test_artifacts.py&#x27;], check=True)</pre><pre class="output">{
+  &quot;result&quot;: &quot;PASS&quot;,
+  &quot;test_valid&quot;: 47,
+  &quot;test_correct&quot;: 39,
+  &quot;final_zip_sha256&quot;: &quot;a14ef576c8becd41de3f38ffd9edc7a9adfc6b267679cfa21e28e97a757c2d9c&quot;
+}
+</pre></section><section class="code"><div>In [2]</div><pre>import csv
+from pathlib import Path
+report_dir = Path(&#x27;reports/v0.8-final-test&#x27;)
+with (report_dir / &#x27;summary.csv&#x27;).open() as handle:
+    summary = list(csv.DictReader(handle))
+for row in summary:
+    print(f&quot;{row[&#x27;split&#x27;]}: validity={row[&#x27;valid&#x27;]}/{row[&#x27;examples&#x27;]}, correctness={row[&#x27;correct&#x27;]}/{row[&#x27;valid&#x27;]} valid, taxonomy macro-F1={float(row[&#x27;taxonomy_macro_f1&#x27;]):.6f}, first-error exact={round(float(row[&#x27;first_error_exact&#x27;]) * int(row[&#x27;first_error_support&#x27;]))}/{row[&#x27;first_error_support&#x27;]}&quot;)</pre><pre class="output">validation: validity=47/48, correctness=35/47 valid, taxonomy macro-F1=0.698352, first-error exact=19/28
+test: validity=47/47, correctness=39/47 valid, taxonomy macro-F1=0.703744, first-error exact=24/26
+</pre></section><section class="code"><div>In [3]</div><pre>tables = sorted(path.name for path in report_dir.glob(&#x27;*.csv&#x27;))
+figures = sorted(path.name for path in (report_dir / &#x27;figures&#x27;).glob(&#x27;*.png&#x27;))
+print(&#x27;Generated tables:&#x27;, &#x27;, &#x27;.join([&#x27;artifact-manifest.json&#x27;] + tables))
+print(&#x27;Generated figures:&#x27;, &#x27;, &#x27;.join(figures))</pre><pre class="output">Generated tables: artifact-manifest.json, per-label-f1.csv, summary.csv, taxonomy-confusion.csv, test-slices.csv
+Generated figures: first-error-distance.png, per-label-validation-vs-test.png, test-taxonomy-confusion.png, test-topic-difficulty-slices.png, validation-vs-test.png
+</pre></section><section class="markdown"><pre>## Interpretation guardrails
+
+Validation selected the model; the 47-example held-out test estimates its frozen performance. Slice and label results are descriptive because several supports are very small. No value in this notebook is used to tune or reselect a model.</pre></section><h2>Figures</h2><div class="grid"><figure><img src="figures/first-error-distance.png"><figcaption>first-error-distance</figcaption></figure><figure><img src="figures/per-label-validation-vs-test.png"><figcaption>per-label-validation-vs-test</figcaption></figure><figure><img src="figures/test-taxonomy-confusion.png"><figcaption>test-taxonomy-confusion</figcaption></figure><figure><img src="figures/test-topic-difficulty-slices.png"><figcaption>test-topic-difficulty-slices</figcaption></figure><figure><img src="figures/validation-vs-test.png"><figcaption>validation-vs-test</figcaption></figure></div></body></html>

@@ -1,0 +1,11 @@
+dimension,slice,examples,valid,correct_exact,correct_rate,taxonomy_exact,taxonomy_rate,first_error_support,first_error_exact,first_error_rate
+topic,definite_integrals,9,9,7,0.7777777777777778,7,0.7777777777777778,5,5,1.0
+topic,improper_integrals,8,8,6,0.75,7,0.875,4,4,1.0
+topic,integration_by_parts,5,5,4,0.8,4,0.8,3,3,1.0
+topic,partial_fractions,6,6,6,1.0,5,0.8333333333333334,4,4,1.0
+topic,substitution,6,6,4,0.6666666666666666,4,0.6666666666666666,2,0,0.0
+topic,trig_integrals,7,7,6,0.8571428571428571,6,0.8571428571428571,4,4,1.0
+topic,trig_substitution,6,6,6,1.0,3,0.5,4,4,1.0
+difficulty,easy,2,2,1,0.5,1,0.5,1,0,0.0
+difficulty,hard,21,21,18,0.8571428571428571,15,0.7142857142857143,12,12,1.0
+difficulty,medium,24,24,20,0.8333333333333334,20,0.8333333333333334,13,12,0.9230769230769231

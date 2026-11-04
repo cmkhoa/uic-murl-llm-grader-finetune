@@ -6,7 +6,7 @@ The first phase is text-to-text only. OCR and handwritten-image input are deferr
 
 ## Project status
 
-The v0.8 cross-family validation experiment is complete. The independently audited selection is **Qwen3-4B v0.6 hierarchical multi-task** (47/48 valid, 35/48 correct, taxonomy macro-F1 0.6984, first-error exact 19/28, utility 0.7020). Read the [final cross-family report](reports/v0.8-final-cross-family-report.md) and use the [reproducibility notebook](notebooks/v0.8-final-reproducibility.ipynb) or [offline helper](scripts/v08_reproducibility.py). The held-out test remains frozen pending separate authorization for one evaluation of this exact winner.
+The v0.8 cross-family experiment is complete. The independently audited validation selection is **Qwen3-4B v0.6 hierarchical multi-task** (47/48 valid, 35/48 correct, taxonomy macro-F1 0.6984, first-error exact 19/28, utility 0.7020). Its authorized one-time held-out test produced 47/47 valid outputs, 39/47 correct labels, taxonomy macro-F1 0.7037, and first-error exact match on 24/26 eligible examples. Read the [cross-family selection report](reports/v0.8-final-cross-family-report.md), [final-test report](reports/v0.8-final-test-report.md), [selection reproducibility notebook](notebooks/v0.8-final-reproducibility.ipynb), and [final-test archive-only notebook](notebooks/v0.8-final-test-reproducibility.ipynb). The main final-test figures cover the [validation comparison](reports/v0.8-final-test/figures/validation-vs-test.png), [topic and difficulty slices](reports/v0.8-final-test/figures/test-topic-difficulty-slices.png), [per-label taxonomy results](reports/v0.8-final-test/figures/per-label-validation-vs-test.png), and [taxonomy confusion](reports/v0.8-final-test/figures/test-taxonomy-confusion.png).
 
 ## Repository layout
 
@@ -21,7 +21,7 @@ The v0.8 cross-family validation experiment is complete. The independently audit
 
 ## Next step
 
-Do not tune or rerun validation. If explicitly authorized, follow the exact one-time held-out plan in the [final report](reports/v0.8-final-cross-family-report.md#exact-one-time-held-out-test-plan-not-executed) using only the frozen Qwen3 v0.6 adapter. A held-out result must not trigger another tuning round.
+Do not tune, rerun validation, or run the held-out split again. The exact one-time held-out plan has been completed for the frozen Qwen3 v0.6 winner; see the [final-test report](reports/v0.8-final-test-report.md). The held-out result must not trigger another tuning round.
 
 See [the project plan](PLANNING.MD), [the task specification](docs/task-spec.md), and [the annotation guide](docs/annotation-guide.md).
 

@@ -1,0 +1,48 @@
+{
+  "executed_colab_notebook": {
+    "path": "runs/final/qwen3-4b-murl-v0.8-v0.6-final-test-20261103-executed.ipynb",
+    "sha256": "8a42c363415865df1be098b6bad0c769782327899907c9f4005a456e68c60f73"
+  },
+  "final_zip": {
+    "path": "runs/final/qwen3-4b-murl-v0.8-v0.6-final-test-20261103.zip",
+    "sha256": "a14ef576c8becd41de3f38ffd9edc7a9adfc6b267679cfa21e28e97a757c2d9c"
+  },
+  "frozen_input_sha256": {
+    "adapter_config": "ac7a01d415e2a6fc808d293b6faf4af25c3d7fa97900bcfa63eca470ca931048",
+    "chat_template": "a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8",
+    "evaluator": "e3b84c6953297af9e7a8d46c5c15616c282dd6908d2488a31488072a644cbd6c",
+    "prepare_run": "fe736e402796ce0593a1eda4647679264f9ed7382a7af8cd2f41291c24517006",
+    "prompt": "bba7ac0e231d661b7578dab544cc6611f65382889ac8632c9efcd086f37ed2b6",
+    "raw_dataset": "80ed4a372590baf975424e932aa4718b64ef6b7c0e54450a3e74e63b83686f4d",
+    "resolved_config": "ec59b1e44176e4b96eb2afd491fbb489dd66725c19e84068c65c4b686a2c68d7",
+    "source_archive": "f4d6e82d14b9fad9465263ac3528d50aa0968c0c4e6e033c210ce549816615c1",
+    "split_manifest": "40cfd584a0f5176fa71d70df2c8be32db34ebcea9dc8dd7222662577a84a19f2",
+    "test": "b3f61a20f95c2050a9bf8d8ef01cc3ff5d56c9996888d404a83d351f563bdf59",
+    "tokenizer_config": "c4f4c62b741ab2940841480f9942f378d7d3878d47c2babb862af7381c59b952",
+    "training_archive": "35ac9d8293df2ddc85c051fca14eb8da7e59540b3ce6277972839cb13c190610",
+    "training_member_adapter_config": "ac7a01d415e2a6fc808d293b6faf4af25c3d7fa97900bcfa63eca470ca931048",
+    "training_member_adapter_weights": "1f104dd6349576669c66f7e7b0e6b8d4e5f7f70f6b42e60b527029b8da49961c",
+    "training_member_chat_template": "a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8",
+    "training_member_resolved_config": "ec59b1e44176e4b96eb2afd491fbb489dd66725c19e84068c65c4b686a2c68d7",
+    "training_member_tokenizer_config": "c4f4c62b741ab2940841480f9942f378d7d3878d47c2babb862af7381c59b952"
+  },
+  "generation_passes": 1,
+  "raw_pre_score_zip": {
+    "path": "runs/final/qwen3-4b-murl-v0.8-v0.6-final-test-20261103-raw-pre-score.zip",
+    "sha256": "4d955c8a94b5031736a1647d7b16bf837e2589b6c4322a835d245b2ca2e14928"
+  },
+  "run_id": "qwen3-4b-murl-v0.8-v0.6-final-test-20261103",
+  "scoring_invocations": 1,
+  "setup_failures": [
+    {
+      "error": "ModuleNotFoundError: scripts",
+      "outputs_generated": 0,
+      "recovery": "same immutable run; original test not reread; generation uses frozen gold copy",
+      "stage": "after held-out parse, before tokenization/generation"
+    }
+  ],
+  "validation_zip": {
+    "path": "runs/baseline/qwen3-4b-v08-v06-validation-results.zip",
+    "sha256": "e491eda904a7504f8c8fb6ccb9011be947a325e2072c9c5e9bfeecffc284420c"
+  }
+}

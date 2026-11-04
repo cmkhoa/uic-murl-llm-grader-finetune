@@ -11,7 +11,11 @@
     "Phi": null
   },
   "winner": "qwen3-v0.6",
-  "held_out_test_executed": false,
+  "held_out_test_executed": true,
+  "final_test_run_id": "qwen3-4b-murl-v0.8-v0.6-final-test-20261103",
+  "final_test_generation_passes": 1,
+  "final_test_scoring_invocations": 1,
+  "final_test_archive_sha256": "a14ef576c8becd41de3f38ffd9edc7a9adfc6b267679cfa21e28e97a757c2d9c",
   "validation_archives_recalculated": 11,
   "training_archives_audited": 6,
   "zip_archives_hashed": 54
