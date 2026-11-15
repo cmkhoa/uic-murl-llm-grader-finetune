@@ -6,9 +6,11 @@ The first phase is text-to-text only. OCR and handwritten-image input are deferr
 
 ## Project status
 
-Start with the [MURL v0.8 final handoff](reports/v0.8-final-handoff.md) for the completed result, key artifacts, and archive-only reproduction paths.
+Start with the [MURL v0.8 final handoff](reports/v0.8-final-handoff.md) for the completed result, key artifacts, and archive-only reproduction paths. The complete study narrative is also available as a [final scientific report](reports/MURL-v0.8-final-scientific-report.pdf).
 
 The v0.8 cross-family experiment is complete. The independently audited validation selection is **Qwen3-4B v0.6 hierarchical multi-task** (47/48 valid, 35/48 correct, taxonomy macro-F1 0.6984, first-error exact 19/28, utility 0.7020). Its authorized one-time held-out test produced 47/47 valid outputs, 39/47 correct labels, taxonomy macro-F1 0.7037, and first-error exact match on 24/26 eligible examples. Read the [cross-family selection report](reports/v0.8-final-cross-family-report.md), [final-test report](reports/v0.8-final-test-report.md), [selection reproducibility notebook](notebooks/v0.8-final-reproducibility.ipynb), and [final-test archive-only notebook](notebooks/v0.8-final-test-reproducibility.ipynb). The main final-test figures cover the [validation comparison](reports/v0.8-final-test/figures/validation-vs-test.png), [topic and difficulty slices](reports/v0.8-final-test/figures/test-topic-difficulty-slices.png), [per-label taxonomy results](reports/v0.8-final-test/figures/per-label-validation-vs-test.png), and [taxonomy confusion](reports/v0.8-final-test/figures/test-taxonomy-confusion.png).
+
+Post-study closeout materials document the [60-record second review](reports/v0.8-second-review-closeout.md) and the [47-output feedback-quality rubric](reports/v0.8-feedback-quality-review.md). These reviews preserve the frozen v0.8 dataset and outputs; they do not change the reported metrics or authorize another test run.
 
 ## Repository layout
 

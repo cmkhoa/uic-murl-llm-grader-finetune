@@ -26,7 +26,7 @@
 - Canonical-solution authoring procedure: authored family templates and reference steps; prior validation notes report numerical checks for all 85 distinct problems.
 - Student-solution generation procedure: authored variants with correct work, local mistakes, material errors, and insufficient-work cases.
 - Annotation-guide version: `v0.1` (`docs/annotation-guide.md`).
-- Reviewer count, review fraction, and dispute resolution: the stored corpus contains 190 `single_annotator` records and 60 `needs_second_review` records (24%). The guide requires a second reviewer to resolve disputes while preserving provenance; those resolutions have not yet been recorded.
+- Reviewer count, review fraction, and dispute resolution: the frozen stored corpus contains 190 `single_annotator` records and 60 records originally marked `needs_second_review` (24%). A 2026-11-15 post-study closeout review confirmed all 60 label triples without changing the frozen source file; resolutions and rationales are preserved in `data/processed/v0.1-second-review-ledger.jsonl`. The closeout review was AI-assisted rather than a blinded human adjudication, so independent faculty sign-off remains necessary for a human-annotation claim.
 
 ## Limitations and ethical use
 

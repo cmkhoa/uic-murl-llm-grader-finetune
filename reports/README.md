@@ -36,6 +36,9 @@ overlapping final values.
 | [v0.8 final cross-family report](v0.8-final-cross-family-report.md) | Final validation audit | Qwen2.5, Qwen3, and Phi recipe comparison | Qwen3-4B v0.6 was selected at 47/48 valid, 35/48 correct, taxonomy macro F1 0.6984, and utility 0.7020. |
 | [v0.8 final test report](v0.8-final-test-report.md) | Final one-time held-out evaluation | Qwen3-4B v0.6 | 47/47 valid; 39/47 correct; taxonomy macro F1 0.7037; first-error exact 24/26. |
 | [v0.8 final handoff](v0.8-final-handoff.md) | Complete; no rerun or tuning | Qwen3-4B v0.6 | Records the final selection, held-out result, reproduction links, and prohibited next actions. |
+| [v0.8 second-review closeout](v0.8-second-review-closeout.md) | Post-study provenance review | 60 queued benchmark records | Confirmed all 60 label triples without modifying the frozen dataset. |
+| [v0.8 feedback-quality review](v0.8-feedback-quality-review.md) | Post-study qualitative review | 47 held-out outputs | 43/47 scored at least 7/8; four materially wrong feedback cases were documented. |
+| [MURL v0.8 final scientific report](MURL-v0.8-final-scientific-report.pdf) | Final research report | Full v0.1–v0.8 study | Consolidates methods, experiments, held-out results, limitations, and conclusions. |
 
 ## Cross-report consistency note
 

@@ -1,0 +1,48 @@
+example_id,feedback_correctness_0_2,specificity_0_2,actionability_0_2,tone_0_2,total_0_8,review_note
+int_sub_0024,2,1,2,2,7,Accurate concise affirmation; no correction was needed.
+int_sub_0025,0,1,0,2,3,Misses the required back-substitution and incorrectly affirms the incomplete answer.
+int_sub_0026,2,1,2,2,7,Accurate concise affirmation; no correction was needed.
+int_sub_0027,2,2,2,2,8,Mathematically accurate diagnosis with a concrete correction or next step.
+int_sub_0028,2,1,2,2,7,Accurate concise affirmation; no correction was needed.
+int_sub_0029,0,1,0,2,3,Rejects a mathematically valid alternative substitution and recommends an unnecessary replacement method.
+int_ibp_0074,2,1,2,2,7,Accurate concise affirmation; no correction was needed.
+int_ibp_0075,2,2,2,2,8,Mathematically accurate diagnosis with a concrete correction or next step.
+int_ibp_0076,2,2,2,2,8,Mathematically accurate diagnosis with a concrete correction or next step.
+int_ibp_0077,2,1,2,2,7,Accurate concise affirmation; no correction was needed.
+int_ibp_0078,2,2,2,2,8,Mathematically accurate diagnosis with a concrete correction or next step.
+int_trig_0094,2,1,2,2,7,Accurate concise affirmation; no correction was needed.
+int_trig_0095,2,2,2,2,8,Mathematically accurate diagnosis with a concrete correction or next step.
+int_trig_0096,2,2,2,2,8,Mathematically accurate diagnosis with a concrete correction or next step.
+int_trig_0097,2,1,2,2,7,Accurate concise affirmation; no correction was needed.
+int_trig_0098,0,2,0,2,4,Identifies the bad term but incorrectly says the constant integrand should be dropped instead of integrating to u.
+int_trig_0099,2,1,2,2,7,Accurate concise affirmation; no correction was needed.
+int_trig_0100,2,2,2,2,8,Mathematically accurate diagnosis with a concrete correction or next step.
+int_trigsub_0113,2,1,2,2,7,Accurate concise affirmation; no correction was needed.
+int_trigsub_0114,2,2,2,2,8,Mathematically accurate diagnosis with a concrete correction or next step.
+int_trigsub_0115,2,2,2,2,8,Mathematically accurate diagnosis with a concrete correction or next step.
+int_trigsub_0116,2,1,2,2,7,Accurate concise affirmation; no correction was needed.
+int_trigsub_0117,2,2,2,2,8,Mathematically accurate diagnosis with a concrete correction or next step.
+int_trigsub_0118,2,2,2,2,8,Mathematically accurate diagnosis with a concrete correction or next step.
+int_pf_0140,2,1,2,2,7,Accurate concise affirmation; no correction was needed.
+int_pf_0141,2,2,2,2,8,Mathematically accurate diagnosis with a concrete correction or next step.
+int_pf_0142,2,2,2,2,8,Mathematically accurate diagnosis with a concrete correction or next step.
+int_pf_0143,2,1,2,2,7,Accurate concise affirmation; no correction was needed.
+int_pf_0144,2,2,2,2,8,Mathematically accurate diagnosis with a concrete correction or next step.
+int_pf_0145,2,2,2,2,8,Mathematically accurate diagnosis with a concrete correction or next step.
+int_def_0154,2,1,2,2,7,Accurate concise affirmation; no correction was needed.
+int_def_0155,0,1,0,2,3,Incorrectly requires transformed limits even though the student back-substitutes before evaluating.
+int_def_0156,2,2,2,2,8,Mathematically accurate diagnosis with a concrete correction or next step.
+int_def_0157,2,1,2,2,7,Accurate concise affirmation; no correction was needed.
+int_def_0158,2,2,2,2,8,Mathematically accurate diagnosis with a concrete correction or next step.
+int_def_0159,2,2,2,2,8,Mathematically accurate diagnosis with a concrete correction or next step.
+int_def_0160,2,1,2,2,7,Accurate concise affirmation; no correction was needed.
+int_def_0161,2,2,2,2,8,Mathematically accurate diagnosis with a concrete correction or next step.
+int_def_0162,2,2,2,2,8,Mathematically accurate diagnosis with a concrete correction or next step.
+int_imp_0188,2,1,2,2,7,Accurate concise affirmation; no correction was needed.
+int_imp_0189,2,2,2,2,8,Mathematically accurate diagnosis with a concrete correction or next step.
+int_imp_0190,2,2,2,2,8,Mathematically accurate diagnosis with a concrete correction or next step.
+int_imp_0191,2,1,2,2,7,Accurate concise affirmation; no correction was needed.
+int_imp_0192,2,2,2,2,8,Mathematically accurate diagnosis with a concrete correction or next step.
+int_imp_0193,2,1,2,2,7,Accurate concise affirmation; no correction was needed.
+int_imp_0194,2,2,2,2,8,Mathematically accurate diagnosis with a concrete correction or next step.
+int_imp_0195,2,2,2,2,8,Mathematically accurate diagnosis with a concrete correction or next step.
