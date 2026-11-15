@@ -44,9 +44,10 @@ plt.rcParams.update(
 plt.rcParams["svg.hashsalt"] = "murl-poster-assets"
 
 
-def save(fig: plt.Figure, stem: str) -> None:
-    fig.savefig(OUT / f"{stem}.png", dpi=240, bbox_inches="tight")
-    fig.savefig(OUT / f"{stem}.svg", bbox_inches="tight", metadata={"Date": None})
+def save(fig: plt.Figure, stem: str, *, tight: bool = True) -> None:
+    bbox_inches = "tight" if tight else None
+    fig.savefig(OUT / f"{stem}.png", dpi=240, bbox_inches=bbox_inches)
+    fig.savefig(OUT / f"{stem}.svg", bbox_inches=bbox_inches, metadata={"Date": None})
     plt.close(fig)
 
 
@@ -152,15 +153,22 @@ def make_cross_model_figure() -> None:
     ax.add_patch(Rectangle((-0.5, winner_index - 0.5), len(metrics), 1, fill=False, edgecolor="#F4B942", linewidth=4))
 
     fig.suptitle("Cross-Family Validation", x=0.5, y=0.965, ha="center", fontsize=24, fontweight="bold", color=NAVY)
-    fig.text(0.28, 0.090, "How to read: darker cells are better. Validity = usable JSON; Correctness = right grade; Taxonomy = right error type; First-error = right first wrong step.", fontsize=9.7, color=GRAY)
-    fig.text(0.28, 0.055, "Every row used the same 48 validation problems. The ★ row met all minimum requirements and had the highest combined utility score.", fontsize=9.7, color=GRAY)
-    fig.text(0.92, 0.023, "Source: audited v0.8 model summary", ha="right", fontsize=9.2, color=GRAY)
+    footer_lines = [
+        "• Darker cells = stronger results.",
+        "• Validity = usable JSON.  Correctness = the right grade.",
+        "• Taxonomy = the right error type.  First-error = the right first wrong step.",
+        "• Every model used the same 48 validation problems.",
+        "• ★ = selected model: it met every minimum requirement and earned the highest combined utility.",
+    ]
+    for line_y, line in zip((0.175, 0.145, 0.115, 0.085, 0.055), footer_lines):
+        fig.text(0.23, line_y, line, fontsize=9.5, color=GRAY)
+    fig.text(0.92, 0.022, "Source: audited v0.8 model summary", ha="right", fontsize=9.2, color=GRAY)
     for spine in ax.spines.values():
         spine.set_visible(False)
     cbar = fig.colorbar(im, ax=ax, fraction=0.027, pad=0.03)
     cbar.set_label("Metric value (0–1)", fontsize=10, fontweight="bold")
-    fig.subplots_adjust(left=0.23, right=0.92, top=0.84, bottom=0.17)
-    save(fig, "v08-cross-model-comparison")
+    fig.subplots_adjust(left=0.23, right=0.92, top=0.84, bottom=0.25)
+    save(fig, "v08-cross-model-comparison", tight=False)
 
 
 def make_v01_v07_figure() -> None:
@@ -212,11 +220,19 @@ def make_v01_v07_figure() -> None:
     ax2.set_xlabel("Experiment version and main training change", fontsize=11, fontweight="bold", labelpad=22)
 
     fig.suptitle("Fine-Tuning Progression", x=0.5, y=0.965, ha="center", fontsize=24, fontweight="bold", color=NAVY)
-    fig.text(0.09, 0.055, "How to read: Validity = usable JSON; Correctness = right grade; Taxonomy = right error type; First-error = right first wrong step. All runs used the same 48 validation problems.", fontsize=9.6, color=GRAY)
-    fig.text(0.09, 0.025, "Zero-shot and few-shot prompting came before v0.1; this chart begins with the first full QLoRA adapter.", fontsize=9.4, color=GRAY)
-    fig.text(0.91, 0.025, "Sources: v0.1–v0.7 validation reports", ha="right", fontsize=9.2, color=GRAY)
-    fig.subplots_adjust(left=0.09, right=0.96, top=0.88, bottom=0.22)
-    save(fig, "qwen25-v01-v07-validation-progression")
+    footer_lines = [
+        "• Validity = the model returned usable JSON.",
+        "• Correctness = the model assigned the right grade.",
+        "• Taxonomy = the model identified the right error type.",
+        "• First-error = the model found the first wrong step.",
+        "• Every version used the same 48 validation problems.",
+        "• Prompt-only zero-shot and few-shot tests came before v0.1; v0.1 is the first QLoRA fine-tune.",
+    ]
+    for line_y, line in zip((0.175, 0.148, 0.121, 0.094, 0.067, 0.040), footer_lines):
+        fig.text(0.09, line_y, line, fontsize=9.3, color=GRAY)
+    fig.text(0.96, 0.018, "Sources: v0.1–v0.7 validation reports", ha="right", fontsize=9.2, color=GRAY)
+    fig.subplots_adjust(left=0.09, right=0.96, top=0.88, bottom=0.31)
+    save(fig, "qwen25-v01-v07-validation-progression", tight=False)
 
 
 if __name__ == "__main__":
