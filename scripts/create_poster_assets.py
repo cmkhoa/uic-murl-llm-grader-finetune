@@ -223,31 +223,18 @@ def make_v01_v07_figure() -> None:
 
     # The y-axis labels make the chart body asymmetric within the canvas.
     fig.suptitle("Fine-Tuning Progression", x=0.525, y=0.965, ha="center", fontsize=24, fontweight="bold", color=NAVY)
-    metric_lines = [
-        "• Validity: returned usable JSON",
-        "• Correctness: assigned the right grade",
-        "• Taxonomy: identified the right error type",
-        "• First-error: found the first wrong step",
-        "• Same 48 validation problems for every version",
+    footer_lines = [
+        "• Validity = the model returned usable JSON.",
+        "• Correctness = the model assigned the right grade.",
+        "• Taxonomy = the model identified the right error type.",
+        "• First-error = the model found the first wrong step.",
+        "• Every version used the same 48 validation problems.",
+        "• Prompt-only zero-shot and few-shot tests came before v0.1; v0.1 is the first QLoRA fine-tune.",
     ]
-    experiment_lines = [
-        "• v0.1 — First full QLoRA fine-tune; established the baseline",
-        "• v0.2 — Added clearer definitions for the grading labels",
-        "• v0.3 — Added decision rules for choosing an error type",
-        "• v0.4 — Balanced all error types equally during training",
-        "• v0.5 — Moderated that balance to recover grading accuracy",
-        "• v0.6 — Gave diagnostic fields extra weight in a multi-task objective",
-        "• v0.7 — Trained normally, then added a diagnosis-focused second stage",
-    ]
-    fig.text(0.09, 0.202, "HOW TO READ THE SCORES", fontsize=9.6, fontweight="bold", color=NAVY)
-    fig.text(0.48, 0.202, "WHAT CHANGED IN EACH EXPERIMENT", fontsize=9.6, fontweight="bold", color=NAVY)
-    for line_y, line in zip((0.177, 0.149, 0.121, 0.093, 0.065), metric_lines):
-        fig.text(0.09, line_y, line, fontsize=8.8, color=GRAY)
-    for line_y, line in zip((0.177, 0.154, 0.131, 0.108, 0.085, 0.062, 0.039), experiment_lines):
-        fig.text(0.48, line_y, line, fontsize=8.4, color=GRAY)
-    fig.text(0.09, 0.029, "Prompt-only zero-shot and few-shot tests came before v0.1.", fontsize=8.6, color=GRAY)
-    fig.text(0.96, 0.014, "Sources: v0.1–v0.7 validation reports", ha="right", fontsize=8.6, color=GRAY)
-    fig.subplots_adjust(left=0.09, right=0.96, top=0.88, bottom=0.34)
+    for line_y, line in zip((0.175, 0.148, 0.121, 0.094, 0.067, 0.040), footer_lines):
+        fig.text(0.09, line_y, line, fontsize=9.3, color=GRAY)
+    fig.text(0.96, 0.018, "Sources: v0.1–v0.7 validation reports", ha="right", fontsize=9.2, color=GRAY)
+    fig.subplots_adjust(left=0.09, right=0.96, top=0.88, bottom=0.31)
     save(fig, "qwen25-v01-v07-validation-progression", tight=False)
 
 
