@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import csv
 import json
+import textwrap
 from collections import Counter
 from pathlib import Path
 
@@ -115,11 +116,10 @@ def make_cross_model_figure() -> None:
         ("Correctness\n(all 48)", lambda r: float(r["correctness_all_48"])),
         ("Taxonomy\nmacro-F1", lambda r: float(r["taxonomy_macro_f1_valid_only"])),
         ("First-error\nexact", lambda r: float(r["first_error_exact_valid_only"])),
-        ("Frozen\nutility", lambda r: float(r["utility"])),
+        ("Combined\nutility", lambda r: float(r["utility"])),
     ]
     values = np.array([[fn(r) for _, fn in metrics] for r in raw])
     labels = [f"{r['family']}  {r['arm']}" for r in raw]
-    eligible = [r["eligible"] == "True" for r in raw]
     winner_index = next(i for i, r in enumerate(raw) if r["key"] == "qwen3-v0.6")
 
     cmap = LinearSegmentedColormap.from_list("murl", ["#EEF4F7", "#9CC9D3", "#2A9D8F", "#176B78"])
@@ -141,29 +141,25 @@ def make_cross_model_figure() -> None:
 
     ax.set_xticks(range(len(metrics)), [m[0] for m in metrics], fontsize=11, fontweight="bold")
     display_labels = []
-    for i, (label, is_eligible) in enumerate(zip(labels, eligible)):
-        suffix = "   ✓ eligible" if is_eligible else "   — not eligible"
-        if i == winner_index:
-            suffix += "   ★ SELECTED"
-        display_labels.append(label + suffix)
+    for i, label in enumerate(labels):
+        display_labels.append(("★  " if i == winner_index else "") + label)
     ax.set_yticks(range(len(raw)), display_labels, fontsize=10.5)
     ax.tick_params(top=True, bottom=False, labeltop=True, labelbottom=False, length=0, pad=10)
 
     for boundary in (2.5, 6.5):
-        ax.axhline(boundary, color="white", linewidth=8)
-        ax.axhline(boundary, color=NAVY, linewidth=1.0, alpha=0.35)
+        ax.axhline(boundary, color="white", linewidth=16)
+        ax.axhline(boundary, color=NAVY, linewidth=3.0, alpha=0.65)
     ax.add_patch(Rectangle((-0.5, winner_index - 0.5), len(metrics), 1, fill=False, edgecolor="#F4B942", linewidth=4))
 
-    fig.suptitle("MURL v0.8 Cross-Model Validation Comparison", x=0.28, y=0.975, ha="left", fontsize=22, fontweight="bold", color=NAVY)
-    fig.text(0.28, 0.912, "Eleven archived arms scored on the same frozen 48-example validation split. Higher is better in every column.", fontsize=11.5, color=GRAY)
-    fig.text(0.28, 0.095, "Eligibility gates: ≥47 valid, ≥30/48 correct, taxonomy macro-F1 ≥0.3201, first-error exact ≥0.536. Utility ranks eligible arms only.", fontsize=10, color=GRAY)
-    fig.text(0.28, 0.060, "Metric denominators: validity and correctness use all 48 examples; taxonomy is valid-output-only; first-error exact uses eligible error cases.", fontsize=9.5, color=GRAY)
-    fig.text(0.92, 0.028, "Source: reports/v0.8-final/model-summary.csv", ha="right", fontsize=9.5, color=GRAY)
+    fig.suptitle("Cross-Family Validation", x=0.5, y=0.965, ha="center", fontsize=24, fontweight="bold", color=NAVY)
+    fig.text(0.28, 0.090, "How to read: darker cells are better. Validity = usable JSON; Correctness = right grade; Taxonomy = right error type; First-error = right first wrong step.", fontsize=9.7, color=GRAY)
+    fig.text(0.28, 0.055, "Every row used the same 48 validation problems. The ★ row met all minimum requirements and had the highest combined utility score.", fontsize=9.7, color=GRAY)
+    fig.text(0.92, 0.023, "Source: audited v0.8 model summary", ha="right", fontsize=9.2, color=GRAY)
     for spine in ax.spines.values():
         spine.set_visible(False)
     cbar = fig.colorbar(im, ax=ax, fraction=0.027, pad=0.03)
     cbar.set_label("Metric value (0–1)", fontsize=10, fontweight="bold")
-    fig.subplots_adjust(left=0.28, right=0.92, top=0.82, bottom=0.18)
+    fig.subplots_adjust(left=0.23, right=0.92, top=0.84, bottom=0.17)
     save(fig, "v08-cross-model-comparison")
 
 
@@ -210,15 +206,16 @@ def make_v01_v07_figure() -> None:
     ax1.annotate("Best correctness", xy=(best_correct, correctness[best_correct]), xytext=(best_correct + 0.5, correctness[best_correct] - 18), arrowprops=dict(arrowstyle="->", color=GRAY), fontsize=9.5, color=GRAY, fontweight="bold")
     ax2.annotate("Best localization", xy=(best_local, first_error[best_local]), xytext=(best_local + 0.6, first_error[best_local] + 10), arrowprops=dict(arrowstyle="->", color=GRAY), fontsize=9.5, color=GRAY, fontweight="bold")
 
-    tick_labels = [f"{v}\n{r}" for v, r in zip(versions, recipes)]
-    ax2.set_xticks(x, tick_labels, fontsize=9.2)
+    tick_labels = [f"{v}\n{textwrap.fill(r, width=18)}" for v, r in zip(versions, recipes)]
+    ax2.set_xticks(x, tick_labels, fontsize=9.0)
     ax2.tick_params(axis="x", pad=10, length=0)
+    ax2.set_xlabel("Experiment version and main training change", fontsize=11, fontweight="bold", labelpad=22)
 
-    fig.suptitle("Qwen2.5 Fine-Tuning Progression: v0.1–v0.7", x=0.09, y=0.975, ha="left", fontsize=22, fontweight="bold", color=NAVY)
-    fig.text(0.09, 0.923, "Actual results on the same frozen 48-example validation split; these were model-development runs, not seven held-out test runs.", fontsize=11.5, color=GRAY)
-    fig.text(0.09, 0.035, "Validity uses all 48 examples. Correctness and taxonomy are valid-output-only; first-error exact uses eligible error cases.", fontsize=9.5, color=GRAY)
-    fig.text(0.91, 0.035, "Sources: v0.1–v0.7 validation reports", ha="right", fontsize=9.5, color=GRAY)
-    fig.subplots_adjust(left=0.09, right=0.96, top=0.86, bottom=0.18)
+    fig.suptitle("Fine-Tuning Progression", x=0.5, y=0.965, ha="center", fontsize=24, fontweight="bold", color=NAVY)
+    fig.text(0.09, 0.055, "How to read: Validity = usable JSON; Correctness = right grade; Taxonomy = right error type; First-error = right first wrong step. All runs used the same 48 validation problems.", fontsize=9.6, color=GRAY)
+    fig.text(0.09, 0.025, "Zero-shot and few-shot prompting came before v0.1; this chart begins with the first full QLoRA adapter.", fontsize=9.4, color=GRAY)
+    fig.text(0.91, 0.025, "Sources: v0.1–v0.7 validation reports", ha="right", fontsize=9.2, color=GRAY)
+    fig.subplots_adjust(left=0.09, right=0.96, top=0.88, bottom=0.22)
     save(fig, "qwen25-v01-v07-validation-progression")
 
 
