@@ -39,6 +39,8 @@ overlapping final values.
 | [v0.8 second-review closeout](v0.8-second-review-closeout.md) | Post-study provenance review | 60 queued benchmark records | Confirmed all 60 label triples without modifying the frozen dataset. |
 | [v0.8 feedback-quality review](v0.8-feedback-quality-review.md) | Post-study qualitative review | 47 held-out outputs | 43/47 scored at least 7/8; four materially wrong feedback cases were documented. |
 | [MURL v0.8 final scientific report](MURL-v0.8-final-scientific-report.pdf) | Final research report | Full v0.1–v0.8 study | Consolidates methods, experiments, held-out results, limitations, and conclusions. |
+| [Poster project write-up](poster-project-writeup.md) | Poster-ready summary | Full v0.1–v0.8 study | Four-paragraph overview of the task, fine-tuning, results, limitations, and next steps. |
+| [Poster visual assets](poster-assets/README.md) | Data-backed figures | Seven methods and v0.8 comparison | Editable SVG and high-resolution PNG figures generated from versioned repository values. |
 
 ## Cross-report consistency note
 
