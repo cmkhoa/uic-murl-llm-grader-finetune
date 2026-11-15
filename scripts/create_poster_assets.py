@@ -152,7 +152,9 @@ def make_cross_model_figure() -> None:
         ax.axhline(boundary, color=NAVY, linewidth=3.0, alpha=0.65)
     ax.add_patch(Rectangle((-0.5, winner_index - 0.5), len(metrics), 1, fill=False, edgecolor="#F4B942", linewidth=4))
 
-    fig.suptitle("Cross-Family Validation", x=0.5, y=0.965, ha="center", fontsize=24, fontweight="bold", color=NAVY)
+    # Center over the complete visual composition (row labels through colorbar),
+    # rather than the raw canvas, whose asymmetric margins make 0.5 look left-shifted.
+    fig.suptitle("Cross-Family Validation", x=0.545, y=0.965, ha="center", fontsize=24, fontweight="bold", color=NAVY)
     footer_lines = [
         "• Darker cells = stronger results.",
         "• Validity = usable JSON.  Correctness = the right grade.",
@@ -219,7 +221,8 @@ def make_v01_v07_figure() -> None:
     ax2.tick_params(axis="x", pad=10, length=0)
     ax2.set_xlabel("Experiment version and main training change", fontsize=11, fontweight="bold", labelpad=22)
 
-    fig.suptitle("Fine-Tuning Progression", x=0.5, y=0.965, ha="center", fontsize=24, fontweight="bold", color=NAVY)
+    # The y-axis labels make the chart body asymmetric within the canvas.
+    fig.suptitle("Fine-Tuning Progression", x=0.525, y=0.965, ha="center", fontsize=24, fontweight="bold", color=NAVY)
     footer_lines = [
         "• Validity = the model returned usable JSON.",
         "• Correctness = the model assigned the right grade.",
