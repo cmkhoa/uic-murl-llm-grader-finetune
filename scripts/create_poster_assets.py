@@ -54,21 +54,20 @@ def save(fig: plt.Figure, stem: str, *, tight: bool = True) -> None:
 def make_methods_figure() -> None:
     rows = [json.loads(line) for line in (ROOT / "data/raw/graded-exams.jsonl").read_text().splitlines()]
     methods = [
-        ("substitution", "Substitution", "u = g(x)"),
-        ("integration_by_parts", "Integration by parts", "∫u dv = uv − ∫v du"),
-        ("trig_integrals", "Trigonometric integrals", "identities + saved factor"),
-        ("trig_substitution", "Trigonometric substitution", "x = a sin θ, a tan θ, or a sec θ"),
-        ("partial_fractions", "Partial fractions", "decompose rational functions"),
-        ("definite_integrals", "Definite integrals / FTC", "F(b) − F(a)"),
-        ("improper_integrals", "Improper integrals", "replace endpoint with a limit"),
+        ("substitution", "Substitution"),
+        ("integration_by_parts", "Integration by parts"),
+        ("trig_integrals", "Trigonometric integrals"),
+        ("trig_substitution", "Trigonometric substitution"),
+        ("partial_fractions", "Partial fractions"),
+        ("definite_integrals", "Definite integrals / FTC"),
+        ("improper_integrals", "Improper integrals"),
     ]
     labels = [m[1] for m in methods]
-    cues = [m[2] for m in methods]
     classes = ["correct", "minor_error", "incorrect", "insufficient_work"]
     class_labels = ["Correct", "Minor error", "Incorrect", "Insufficient work"]
     colors = [TEAL, GOLD, RED, GRAY]
     counts = []
-    for key, _, _ in methods:
+    for key, _ in methods:
         c = Counter(r["overall_correctness"] for r in rows if r["topic"] == key)
         counts.append([c[k] for k in classes])
     counts = np.asarray(counts)
@@ -85,24 +84,22 @@ def make_methods_figure() -> None:
                 ax.text(left[i] + value / 2, i, str(value), ha="center", va="center", fontsize=10, fontweight="bold", color="white" if j in (0, 2, 3) else NAVY)
         left += counts[:, j]
 
-    for i, (total, cue) in enumerate(zip(totals, cues)):
-        ax.text(total + 0.7, i - 0.10, f"n = {total}", va="center", fontsize=11, fontweight="bold")
-        ax.text(total + 0.7, i + 0.18, cue, va="center", fontsize=9.5, color=GRAY)
+    for i, total in enumerate(totals):
+        ax.text(total + 0.7, i, f"n = {total}", va="center", fontsize=11, fontweight="bold")
 
     ax.set_yticks(y, labels, fontsize=11.5, fontweight="bold")
     ax.invert_yaxis()
-    ax.set_xlim(0, max(totals) + 18)
-    ax.set_xlabel("Number of authored benchmark examples", fontsize=11.5, fontweight="bold")
-    ax.set_title("Seven Core Integration Methods in the MURL Benchmark", loc="left", fontsize=22, pad=24, color=NAVY)
-    ax.text(0, 1.035, "Actual composition of 203 method-specific records; the separate mixed-review category contains 47 additional records.", transform=ax.transAxes, fontsize=11.5, color=GRAY)
+    ax.set_xlim(0, max(totals) + 7)
+    ax.set_xlabel("Number of examples", fontsize=11.5, fontweight="bold")
+    fig.suptitle("Integration Dataset Breakdown", x=0.5, y=0.96, ha="center", fontsize=24, fontweight="bold", color=NAVY)
     ax.grid(axis="x", color="#D7E0E6", linewidth=0.8, alpha=0.8)
     ax.set_axisbelow(True)
     for spine in ax.spines.values():
         spine.set_visible(False)
     ax.legend(ncol=4, loc="lower left", bbox_to_anchor=(0, -0.18), frameon=False, fontsize=10.5)
     ax.text(1, -0.16, "Source: data/raw/graded-exams.jsonl (250 records total)", transform=ax.transAxes, ha="right", fontsize=9.5, color=GRAY)
-    fig.subplots_adjust(left=0.22, right=0.96, top=0.84, bottom=0.20)
-    save(fig, "seven-integration-methods")
+    fig.subplots_adjust(left=0.22, right=0.96, top=0.86, bottom=0.20)
+    save(fig, "seven-integration-methods", tight=False)
 
 
 def make_cross_model_figure() -> None:
