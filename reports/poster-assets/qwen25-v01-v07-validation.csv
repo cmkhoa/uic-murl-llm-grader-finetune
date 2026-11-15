@@ -1,0 +1,8 @@
+version,recipe,valid,examples,correctness_accuracy,correctness_macro_f1,taxonomy_macro_f1,first_error_exact,first_error_mad,source_report
+v0.1,Initial full QLoRA,48,48,0.583,0.437,0.317,0.517,0.48,reports/v0.1-qlora-full-validation.md
+v0.2,Label guidance,47,48,0.660,0.493,0.207,0.536,0.42,reports/v0.2-label-guidance-validation.md
+v0.3,Taxonomy guidance,47,48,0.723,0.530,0.197,0.500,0.41,reports/v0.3-taxonomy-guidance-validation.md
+v0.4,Equal taxonomy balance,46,48,0.587,0.455,0.327,0.714,0.32,reports/v0.4-taxonomy-balanced-validation.md
+v0.5,Moderated balance,47,48,0.638,0.479,0.320,0.536,0.36,reports/v0.5-moderated-taxonomy-balance-validation.md
+v0.6,Hierarchical multi-task,46,48,0.696,0.500,0.245,0.630,0.33,reports/v0.6-hierarchical-multitask-validation.md
+v0.7,Two-stage diagnosis,48,48,0.646,0.483,0.303,0.552,0.35,reports/v0.7-two-stage-diagnosis-validation.md

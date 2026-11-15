@@ -40,11 +40,12 @@ plt.rcParams.update(
         "savefig.facecolor": "white",
     }
 )
+plt.rcParams["svg.hashsalt"] = "murl-poster-assets"
 
 
 def save(fig: plt.Figure, stem: str) -> None:
     fig.savefig(OUT / f"{stem}.png", dpi=240, bbox_inches="tight")
-    fig.savefig(OUT / f"{stem}.svg", bbox_inches="tight")
+    fig.savefig(OUT / f"{stem}.svg", bbox_inches="tight", metadata={"Date": None})
     plt.close(fig)
 
 
@@ -166,7 +167,63 @@ def make_cross_model_figure() -> None:
     save(fig, "v08-cross-model-comparison")
 
 
+def make_v01_v07_figure() -> None:
+    with (OUT / "qwen25-v01-v07-validation.csv").open(newline="") as f:
+        rows = list(csv.DictReader(f))
+
+    versions = [r["version"] for r in rows]
+    recipes = [r["recipe"] for r in rows]
+    x = np.arange(len(rows))
+    validity = np.array([int(r["valid"]) / int(r["examples"]) for r in rows]) * 100
+    correctness = np.array([float(r["correctness_accuracy"]) for r in rows]) * 100
+    correctness_f1 = np.array([float(r["correctness_macro_f1"]) for r in rows]) * 100
+    taxonomy_f1 = np.array([float(r["taxonomy_macro_f1"]) for r in rows]) * 100
+    first_error = np.array([float(r["first_error_exact"]) for r in rows]) * 100
+
+    fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(13.8, 9.0), sharex=True, gridspec_kw={"height_ratios": [1, 1], "hspace": 0.18})
+    series_top = [
+        ("Structured validity", validity, NAVY, "o"),
+        ("Correctness accuracy", correctness, TEAL, "s"),
+        ("Correctness macro-F1", correctness_f1, ORANGE, "D"),
+    ]
+    series_bottom = [
+        ("Taxonomy macro-F1", taxonomy_f1, RED, "o"),
+        ("First-error exact", first_error, BLUE, "s"),
+    ]
+
+    for ax, series in ((ax1, series_top), (ax2, series_bottom)):
+        for label, values, color, marker in series:
+            ax.plot(x, values, label=label, color=color, marker=marker, markersize=7, linewidth=2.6)
+            for xi, value in zip(x, values):
+                ax.annotate(f"{value:.1f}", (xi, value), xytext=(0, 8), textcoords="offset points", ha="center", fontsize=8.5, fontweight="bold", color=color)
+        ax.set_ylim(0, 106)
+        ax.set_ylabel("Validation score (%)", fontsize=11, fontweight="bold")
+        ax.set_yticks(np.arange(0, 101, 20))
+        ax.grid(axis="y", color="#D7E0E6", linewidth=0.8)
+        ax.set_axisbelow(True)
+        for spine in ax.spines.values():
+            spine.set_visible(False)
+        ax.legend(loc="lower left", ncol=len(series), frameon=False, fontsize=10)
+
+    best_correct = int(np.argmax(correctness))
+    best_local = int(np.argmax(first_error))
+    ax1.annotate("Best correctness", xy=(best_correct, correctness[best_correct]), xytext=(best_correct + 0.5, correctness[best_correct] - 18), arrowprops=dict(arrowstyle="->", color=GRAY), fontsize=9.5, color=GRAY, fontweight="bold")
+    ax2.annotate("Best localization", xy=(best_local, first_error[best_local]), xytext=(best_local + 0.6, first_error[best_local] + 10), arrowprops=dict(arrowstyle="->", color=GRAY), fontsize=9.5, color=GRAY, fontweight="bold")
+
+    tick_labels = [f"{v}\n{r}" for v, r in zip(versions, recipes)]
+    ax2.set_xticks(x, tick_labels, fontsize=9.2)
+    ax2.tick_params(axis="x", pad=10, length=0)
+
+    fig.suptitle("Qwen2.5 Fine-Tuning Progression: v0.1–v0.7", x=0.09, y=0.975, ha="left", fontsize=22, fontweight="bold", color=NAVY)
+    fig.text(0.09, 0.923, "Actual results on the same frozen 48-example validation split; these were model-development runs, not seven held-out test runs.", fontsize=11.5, color=GRAY)
+    fig.text(0.09, 0.035, "Validity uses all 48 examples. Correctness and taxonomy are valid-output-only; first-error exact uses eligible error cases.", fontsize=9.5, color=GRAY)
+    fig.text(0.91, 0.035, "Sources: v0.1–v0.7 validation reports", ha="right", fontsize=9.5, color=GRAY)
+    fig.subplots_adjust(left=0.09, right=0.96, top=0.86, bottom=0.18)
+    save(fig, "qwen25-v01-v07-validation-progression")
+
+
 if __name__ == "__main__":
     make_methods_figure()
     make_cross_model_figure()
+    make_v01_v07_figure()
     print(f"Wrote poster assets to {OUT}")
