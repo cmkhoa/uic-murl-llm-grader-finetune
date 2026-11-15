@@ -120,7 +120,7 @@ def make_cross_model_figure() -> None:
         ("Combined\nutility", lambda r: float(r["utility"])),
     ]
     values = np.array([[fn(r) for _, fn in metrics] for r in raw])
-    labels = [f"{r['family']}  {r['arm']}" for r in raw]
+    labels = [f"{r['family']}  {r['arm'].replace('v0.', 'v')}" for r in raw]
     winner_index = next(i for i, r in enumerate(raw) if r["key"] == "qwen3-v0.6")
 
     cmap = LinearSegmentedColormap.from_list("murl", ["#EEF4F7", "#9CC9D3", "#2A9D8F", "#176B78"])
@@ -164,7 +164,7 @@ def make_cross_model_figure() -> None:
     ]
     for line_y, line in zip((0.175, 0.145, 0.115, 0.085, 0.055), footer_lines):
         fig.text(0.23, line_y, line, fontsize=9.5, color=GRAY)
-    fig.text(0.92, 0.022, "Source: audited v0.8 model summary", ha="right", fontsize=9.2, color=GRAY)
+    fig.text(0.92, 0.022, "Source: audited v8 model summary", ha="right", fontsize=9.2, color=GRAY)
     for spine in ax.spines.values():
         spine.set_visible(False)
     cbar = fig.colorbar(im, ax=ax, fraction=0.027, pad=0.03)
@@ -177,7 +177,7 @@ def make_v01_v07_figure() -> None:
     with (OUT / "qwen25-v01-v07-validation.csv").open(newline="") as f:
         rows = list(csv.DictReader(f))
 
-    versions = [r["version"] for r in rows]
+    versions = [r["version"].replace("v0.", "v") for r in rows]
     recipes = [r["recipe"] for r in rows]
     x = np.arange(len(rows))
     validity = np.array([int(r["valid"]) / int(r["examples"]) for r in rows]) * 100
@@ -229,11 +229,11 @@ def make_v01_v07_figure() -> None:
         "• Taxonomy = the model identified the right error type.",
         "• First-error = the model found the first wrong step.",
         "• Every version used the same 48 validation problems.",
-        "• Prompt-only zero-shot and few-shot tests came before v0.1; v0.1 is the first QLoRA fine-tune.",
+        "• Prompt-only zero-shot and few-shot tests came before v1; v1 is the first QLoRA fine-tune.",
     ]
     for line_y, line in zip((0.175, 0.148, 0.121, 0.094, 0.067, 0.040), footer_lines):
         fig.text(0.09, line_y, line, fontsize=9.3, color=GRAY)
-    fig.text(0.96, 0.018, "Sources: v0.1–v0.7 validation reports", ha="right", fontsize=9.2, color=GRAY)
+    fig.text(0.96, 0.018, "Sources: v1–v7 validation reports", ha="right", fontsize=9.2, color=GRAY)
     fig.subplots_adjust(left=0.09, right=0.96, top=0.88, bottom=0.31)
     save(fig, "qwen25-v01-v07-validation-progression", tight=False)
 
